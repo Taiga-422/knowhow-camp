@@ -20,7 +20,9 @@ export default function LandingPage() {
         return;
       }
 
-      const urls = data.map((w: any) => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${w.thumbnail_url}`);
+      const urls = data.map((w: { thumbnail_url: string }) =>
+        `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${w.thumbnail_url}`
+      );
       setThumbnails([...urls, ...urls]); // 無限ループっぽく繰り返す
     };
 

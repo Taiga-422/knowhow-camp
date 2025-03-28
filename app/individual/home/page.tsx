@@ -7,8 +7,6 @@ import VideoCardGrid from '@/app/components/VideoCardGrid';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function CompanyHome() {
-    const [userName, setUserName] = useState("");
-    const [role, setRole] = useState("");
     const [interestVideos, setInterestVideos] = useState<Webinar[]>([]);
     const [likedVideos, setLikedVideos] = useState<Webinar[]>([]);
     const [viewedVideos, setViewedVideos] = useState<Webinar[]>([]);
@@ -26,11 +24,6 @@ export default function CompanyHome() {
         likes?: { id: string }[];
     };
 
-    type Props = {
-        videos: Webinar[];
-    };
-
-
     useEffect(() => {
         const fetchAll = async () => {
             const { data: auth } = await supabase.auth.getUser();
@@ -44,8 +37,6 @@ export default function CompanyHome() {
                 .eq("id", userId)
                 .single();
             if (user) {
-                setUserName(user.name);
-                setRole(user.role);
             }
             // 検索履歴を読み込む
             const history = localStorage.getItem("searchHistory");
