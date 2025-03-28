@@ -26,7 +26,7 @@ export default function SignUpPage() {
             email,
             password,
             options: {
-            emailRedirectTo: "http://localhost:3000/setup-profile",
+            emailRedirectTo: "https://knowhow-camp.vercel.app/setup-profile",
             },
         });
 
