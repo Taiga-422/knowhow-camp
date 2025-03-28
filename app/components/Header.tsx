@@ -10,7 +10,7 @@ const Header = () => {
     const [userName, setUserName] = useState('');
     const [userRole, setUserRole] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
-    const menuRef = useRef(null);
+    const menuRef = useRef<HTMLDivElement | null>(null);
     const router = useRouter();
 
     useEffect(() => {
@@ -60,10 +60,8 @@ const Header = () => {
     };
 
     useEffect(() => {
-        const menuRef = useRef<HTMLDivElement | null>(null);
         const handleClickOutside = (event: MouseEvent) => {
             const menuElement = menuRef.current;
-    
             if (
                 menuElement &&
                 menuElement instanceof HTMLElement &&
@@ -76,9 +74,6 @@ const Header = () => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
-    
-    
-    
 
     const handleEditProfile = () => {
         if (userRole === 'company') {

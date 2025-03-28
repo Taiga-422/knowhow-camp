@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 
@@ -31,7 +32,7 @@ const VideoCardGrid: React.FC<Props> = ({ videos }) => {
                     className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer"
                     >
                         <div className= "w-full h-[200px]">
-                            <img
+                            <Image
                                 src={
                                 video.thumbnail_url
                                     ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${video.thumbnail_url}`
