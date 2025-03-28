@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { useRouter } from "next/navigation";
 import Header from "@/app/components/Header";
 
 export default function CompanyProfileEdit() {
@@ -11,7 +10,6 @@ export default function CompanyProfileEdit() {
     const [description, setDescription] = useState("");
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
-    const router = useRouter();
 
     useEffect(() => {
         const fetchProfile = async () => {

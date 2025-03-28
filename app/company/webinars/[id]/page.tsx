@@ -9,13 +9,36 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { useRouter } from "next/navigation";
 
+type Webinar = {
+    id?: string;
+    title?: string;
+    description?: string;
+    video_url?: string;
+    document_url?: string;
+    thumbnail_url?: string;
+    interests?: string[];
+    user_id?: string;
+    company_name?: string;
+    created_at?: string;
+};
+
+type Comment = {
+    id: string;
+    webinar_id: string;
+    user_id: string;
+    user_name: string;
+    comment: string;
+    created_at: string;
+    updated_at?: string;
+};
+
 export default function WebinarDetail() {
 
     const router = useRouter();
 
     const params = useParams();
     const id = params.id as string;
-    const [webinar, setWebinar] = useState<any>(null);
+    const [webinar, setWebinar] = useState<Webinar | null>(null);
     const [viewCount, setViewCount] = useState<number>(0);
     const [liked, setLiked] = useState<boolean>(false);
     const [likeCount, setLikeCount] = useState<number>(0);
@@ -25,30 +48,6 @@ export default function WebinarDetail() {
     const [currentUserId, setCurrentUserId] = useState<string | null>(null);
     const [editTitle, setEditTitle] = useState("");
     const [editDescription, setEditDescription] = useState("");
-
-    type Webinar = {
-        id: string;
-        title: string;
-        description?: string;
-        video_url?: string;
-        document_url?: string;
-        thumbnail_url?: string;
-        interests: string[];
-        user_id: string;
-        company_name?: string;
-        created_at?: string;
-    };
-
-    // 型定義（必要に応じて上部で定義）
-    type Comment = {
-    id: string;
-    webinar_id: string;
-    user_id: string;
-    user_name: string;
-    comment: string;
-    created_at: string;
-    updated_at?: string;
-    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -82,9 +81,12 @@ export default function WebinarDetail() {
             fetchViewCount(webinar.id);
             fetchLikes(webinar.id);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [webinar]);
 
     const handleUpdate = async () => {
+        if (!webinar) return;
+
         const { error } = await supabase
             .from("webinars")
             .update({
@@ -130,6 +132,8 @@ export default function WebinarDetail() {
     };
 
     const handleDelete = async () => {
+        if (!webinar) return;
+
         const confirm = window.confirm("本当にこのウェビナーを削除しますか？");
         if (!confirm) return;
     
@@ -250,8 +254,8 @@ export default function WebinarDetail() {
                         <button
                         onClick={() => {
                             setEditing(true);
-                            setEditTitle(webinar.title);
-                            setEditDescription(webinar.description || "");
+                            setEditTitle(webinar.title ?? "");
+                            setEditDescription(webinar.description ?? "");
                         }}
                         className="text-sm bg-gray-200 text-gray-800 px-2 py-1 rounded hover:bg-gray-300"
                         >

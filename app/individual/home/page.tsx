@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
 import Header from "@/app/components/Header";
 import VideoCardGrid from '@/app/components/VideoCardGrid';
@@ -10,7 +9,6 @@ import SearchIcon from '@mui/icons-material/Search';
 export default function CompanyHome() {
     const [userName, setUserName] = useState("");
     const [role, setRole] = useState("");
-    const router = useRouter();
     const [interestVideos, setInterestVideos] = useState<Webinar[]>([]);
     const [likedVideos, setLikedVideos] = useState<Webinar[]>([]);
     const [viewedVideos, setViewedVideos] = useState<Webinar[]>([]);

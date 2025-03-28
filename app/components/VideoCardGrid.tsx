@@ -1,8 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "@/lib/supabase";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
+import Image from 'next/image';
 import Header from '@/app/components/Header';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
@@ -15,13 +16,13 @@ type Webinar = {
     user_id: string;
     company_name?: string;
     users?: {
-        companies?: {
+    companies: {
         company_name?: string;
-        };
-    };
+    }[];
+    }[];
     views?: { id: string }[];
     likes?: { id: string }[];
-};
+    };
 
     export default function CompanyHome() {
     const [webinars, setWebinars] = useState<Webinar[]>([]);
@@ -62,9 +63,9 @@ type Webinar = {
                 return;
             }
     
-            const formatted = data.map((w: any) => ({
+            const formatted = data.map((w: Webinar) => ({
                 ...w,
-                company_name: w.users?.companies[0]?.company_name || '無名企業',
+                company_name: w.users?.[0]?.companies?.[0]?.company_name || '無名企業',
             }));
             setWebinars(formatted);
         };
@@ -95,7 +96,7 @@ type Webinar = {
                         className="bg-white rounded-xl shadow-md overflow-hidden cursor-pointer hover:shadow-lg transition"
                         onClick={() => router.push(`/company/webinars/${webinar.id}`)}
                     >
-                        <img
+                        <Image
                         src={
                             webinar.thumbnail_url
                             ? `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${webinar.thumbnail_url}`

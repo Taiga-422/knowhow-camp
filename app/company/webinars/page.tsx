@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import Header from '@/app/components/Header';
 
@@ -20,8 +19,6 @@ export default function WebinarUploadPage() {
         '組織・人事・採用', '経理・会計・財務', '法務・労務・総務', '営業・SFA',
         '生産・販売管理', 'PM・PMO', 'M&A・PMI', '経営企画', 'スタートアップ', 'ビジネスコアスキル',
     ];
-
-    const router = useRouter();
 
     const handleUpload = async () => {
         if (!title || !description || !videoFile) {

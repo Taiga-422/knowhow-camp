@@ -60,14 +60,25 @@ const Header = () => {
     };
 
     useEffect(() => {
+        const menuRef = useRef<HTMLDivElement | null>(null);
         const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !(menuRef.current as any).contains(event.target)) {
+            const menuElement = menuRef.current;
+    
+            if (
+                menuElement &&
+                menuElement instanceof HTMLElement &&
+                !menuElement.contains(event.target as Node)
+            ) {
                 setMenuOpen(false);
             }
         };
+    
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
+    
+    
+    
 
     const handleEditProfile = () => {
         if (userRole === 'company') {
