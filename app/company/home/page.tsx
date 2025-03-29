@@ -15,13 +15,14 @@ type Webinar = {
     interests: string[];
     user_id: string;
     company_name?: string;
-    companies?: {
-    company_name?: string;
-    }[]; 
+    users?: {
+        companies: {
+        company_name?: string;
+        }[];
+    }[];
     views?: { id: string }[];
     likes?: { id: string }[];
     };
-
 
     export default function CompanyHome() {
     const [webinars, setWebinars] = useState<Webinar[]>([]);
@@ -40,19 +41,22 @@ type Webinar = {
             }
     
             const { data, error } = await supabase
-                .from('webinars')
-                .select(`
+            .from('webinars')
+            .select(`
                 id,
                 title,
                 thumbnail_url,
                 interests,
                 user_id,
-                companies (
+                users (
+                    companies (
                     company_name
+                    )
                 ),
                 views(id),
                 likes(id)
-                `)
+            `)
+
                 .eq('user_id', user.id); // ログインしているユーザーの投稿のみが表示される
     
             if (error) {
@@ -60,10 +64,11 @@ type Webinar = {
                 return;
             }
     
-            const formatted = data.map((w: Webinar) => ({
+            const formatted = data.map((w): Webinar => ({
                 ...w,
-                company_name: w.companies?.[0]?.company_name || '無名企業',
-                }));
+                company_name: w.users?.[0]?.companies?.[0]?.company_name || '無名企業',
+              }));
+              
             setWebinars(formatted);
         };
     
